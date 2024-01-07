@@ -737,10 +737,6 @@ Remember to replace 0x49000000 and 0x44000000 with the actual memory addresses f
 
 These modifications are specific to your configuration and may vary depending on the actual structure of your DTB and the organization of the uImage. Be sure to check your DTB structure and understand the paths and properties you need to modify to specify the size of rootfs.img.gz within your uImage.
 
-
-
-
-
 Based on the provided device tree blob (DTB) information, you can use U-Boot's fdt set command to modify specific properties within the DTB. To specify the size of rootfs.img.gz within your uImage, you should locate the appropriate node in your DTB and set the reg property. In your DTB, it appears to be under the /chosen/module@0 node.
 
 Here's the modified fdt set command:
@@ -750,4 +746,63 @@ Replace 0xYOUR_SIZE with the size of rootfs.img.gz in hexadecimal format. Make s
 
 After running this command, the DTB will be modified with the new size for rootfs.img.gz. Save your changes by ensuring U-Boot updates the DTB in memory, and then continue with the boot process.
 
+Error!
+If it shows "
+=> fdt set /chosen/module@0 reg <0x47000000 0x274ea00>  
+libfdt fdt_path_offset() returned FDT_ERR_NOTFOUND
+"
+
+Solution!
+
+It means that the path /chosen/module@0 does not exist in your device tree blob (DTB). The path and nodes in the DTB might vary depending on the specific configuration of your system. You will need to find the correct path to the node that corresponds to the module containing rootfs.img.gz size information.
+
+Here's what you can do to locate the correct path:
+
+Use the fdt print command to display the entire device tree blob. This will give you a better understanding of the available nodes and their paths.
+Look for a node that might correspond to your module or the kernel image and its properties. You should typically find a node specifying the kernel's memory location, and within it, you can modify the reg property.
+Once you've identified the correct path to the node, use the fdt set command as mentioned earlier, replacing the path and values accordingly.
+If you have trouble finding the correct path or node in your device tree blob, you may want to consult your system's documentation or the resources provided with your hardware or board to identify the correct location to modify the reg property for the size of rootfs.img.gz.
+
+Modifying the Device Tree Blob
+The guide you provided seems to offer specific instructions for modifying the device tree blob in U-Boot to load Xen and the Linux kernel. Here's how to execute the commands in your case:
+
+Set the base address of the device tree blob (DTB) with fdt addr:
+
+Copy code
+fdt addr 0x44000000
+Resize the device tree blob with fdt resize:
+
+css
+Copy code
+fdt resize
+Set the #address-cells and #size-cells properties for /chosen node:
+
+arduino
+Copy code
+fdt set /chosen \#address-cells <1>
+fdt set /chosen \#size-cells <1>
+
+Create a new node /chosen/module@0:
+
+fdt mknod /chosen module@0
+Set properties for the new node /chosen/module@0:
+
+Set the compatible property:
+
+fdt set /chosen/module@0 compatible "xen,linux-zimage" "xen,multiboot-module"
+Set the reg property for the module specifying the location and size of rootfs.img.gz. In your case, this might differ depending on the actual location and size of rootfs.img.gz. You should adjust the values accordingly:
+
+fdt set /chosen/module@0 reg <0x47000000 0x7F31CE>
+
+Set the bootargs property if needed:
+
+fdt set /chosen/module@0 bootargs "earlyprintk=serial,ttyAMA0 console=ttyAMA0,115200n8 earlycon=xenboot"
+
+Boot the system using the modified device tree blob and the Xen + Linux kernel images:
+
+booti 0x49000000 - 0x44000000
+
+These commands follow the instructions provided in the guide you mentioned and should allow you to boot Xen and Linux with the adjusted parameters. Make sure to replace the reg values with the correct memory address and size for rootfs.img.gz based on your specific setup.
+
+END
 
