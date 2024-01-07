@@ -1,4 +1,4 @@
-# xenonqemuandarm
+# XEN on QEMU & ARM64
 This repository aims to walk you through the process of setting up Xen for Arm using the Qemu emulator. 
 If you are using x32/64 on your Host PC. You may encounter some errors. I have provided the possible error that can occur and solutions to the problems.
 
