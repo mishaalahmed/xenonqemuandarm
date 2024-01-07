@@ -1,0 +1,21 @@
+<h1>Install QEMU for ARM64 emulation</h1>
+You will need QEMU to emulate the ARM64 architecture on your x86_64 system. Install it using your package manager. In Ubuntu, you can use the following command:
+sudo apt-get install qemu-system-arm
+
+<h1>Download the ARM64 Xen</h1>
+Obtain the ARM64 version of Xen suitable for your specific use case, usually from the official Xen project website or a trusted source.
+
+<h1>Emulate ARM64 with QEMU</h1>
+You can use QEMU to create a virtual ARM64 machine for running Xen. The command to do so may vary based on your specific use case and the guide's instructions. It often involves using qemu-system-aarch64 with the necessary options.
+
+<h1>Follow the guide</h1>
+Proceed with following the guide as it instructs for an ARM64 system. The key changes you'll need to make are related to architecture-specific differences, such as the ARM64 bootloader, kernel, and specific device emulation.
+
+<h1>Adapt for Ubuntu</h1>
+When the guide mentions specific commands or configurations that are Ubuntu-specific, you can generally follow them without modification. However, you may need to adapt or replace commands that are specific to other Linux distributions.
+
+<h1>Adjust for Differences</h1>
+Keep in mind that ARM64 and x86_64 systems have some fundamental differences, and you might encounter issues or variations in the steps. Be prepared to troubleshoot any errors or discrepancies that arise.
+
+If you encounter any specific issues or have questions about adapting particular steps, please provide more details, and I'll do my best to help you troubleshoot them. Additionally, be sure to check the guide for any ARM-specific recommendations or adjustments that you might need to make while following it on an x86_64-based system.
+
