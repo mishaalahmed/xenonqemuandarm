@@ -804,5 +804,6 @@ booti 0x49000000 - 0x44000000
 
 These commands follow the instructions provided in the guide you mentioned and should allow you to boot Xen and Linux with the adjusted parameters. Make sure to replace the reg values with the correct memory address and size for rootfs.img.gz based on your specific setup.
 
-END
+END OF THE WALKTHROUGH
+******************************
 
